@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.views.decorators.http import require_GET
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.db.models import Q
-from django.conf import settings
 from main.models import Room, get_record_model
 import requests
 import datetime
@@ -12,7 +11,7 @@ def get_current_user(request):
     session_key = request.COOKIES.get('authsessionid', '')
     if len(session_key) != 32:
         return None
-    url = 'https://auth.hullqin.cn/innerapi/user/' if settings.DEBUG else 'http://127.0.0.1:2884/innerapi/user/'
+    url = 'https://auth.hullqin.cn/innerapi/user/'
     response = requests.get(url, headers=dict(cookie=f'authsessionid={session_key}'))
     if not response.text:
         return None
@@ -50,7 +49,7 @@ def enter_room(request, username, room):
     try:
         get_room_or_reject(request, username, room)
     except Room.DoesNotExist:
-        return render(request, 'record.html')
+        return redirect('/')
     return render(request, 'record.html')
 
 
