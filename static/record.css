@@ -1,0 +1,68 @@
+html, body, .message-window {
+  height: 100%;
+  width: 100%
+}
+body {
+  margin: 0
+}
+.message-list {
+  margin-left: auto;
+  overflow: hidden;
+  min-width: 360px;
+  font-size: 14px;
+  word-break: break-all;
+}
+.message-wrapper {
+  padding: 2px 0;
+  display: flex;
+}
+.message-wrapper.start {
+  padding-top: 0;
+}
+.message-left {
+  flex: 0 0 42px;
+  padding-left: 20px;
+}
+.message-right {
+  flex: 1;
+  padding-right: 20px;
+}
+.content {
+  padding: 10px 12px;
+  line-height: 20px;
+  width: fit-content;
+  max-width: 450px;
+  border-radius: 2px 8px 8px 2px;
+  background-color: #eff0f1;
+  color: #1f2329;
+}
+.message-wrapper.start .content {
+  border-top-left-radius: 8px;
+}
+.message-wrapper.end .content {
+  border-bottom-left-radius: 8px;
+}
+.content.recalled {
+  color: #646a73;
+  user-select: none;
+}
+.time {
+  height: 17px;
+  line-height: 17px;
+  visibility: hidden;
+  font-size: 12px;
+  color: #8f959e;
+  user-select: none;
+}
+.message-wrapper.start:hover .time {
+  visibility: initial;
+}
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  user-select: none;
+}
+.message-wrapper.start .avatar {
+  margin-top: 17px;
+}
