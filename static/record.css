@@ -1,9 +1,9 @@
-html, body, .message-window {
+html,body,.message-window {
   height: 100%;
   width: 100%
 }
 body {
-  margin: 0
+  margin: 0;
 }
 .message-list {
   margin-left: auto;
@@ -25,7 +25,7 @@ body {
 }
 .message-right {
   flex: 1;
-  padding-right: 20px;
+  padding-right: 40px;
 }
 .content {
   padding: 10px 12px;
@@ -45,6 +45,14 @@ body {
 .content.recalled {
   color: #646a73;
   user-select: none;
+}
+.content a {
+  color: #1c4cba;
+  text-decoration: none;
+  -webkit-user-drag: none;
+}
+.content a:hover {
+  text-decoration: underline;
 }
 .time {
   height: 17px;

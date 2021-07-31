@@ -16,9 +16,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-qkduvnf%rngyhiwerfheiaurfgherfgbe!$vgearifghefih#4'  # overrode by prod_settings.py
 
-DEBUG = True
+DEBUG = True  # overrode by prod_settings.py
 
-# ALLOWED_HOSTS is overrode by prod_settings.py
+ALLOWED_HOSTS = ['*']  # overrode by prod_settings.py
 
 INSTALLED_APPS = [
     'django.contrib.staticfiles',
