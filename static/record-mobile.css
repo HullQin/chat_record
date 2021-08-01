@@ -1,0 +1,28 @@
+.message-list {
+  font-size:16px;
+}
+.content a:hover {
+  text-decoration: none;
+}
+.time {
+  visibility: initial;
+  display: none;
+  padding: 8px 0 0;
+}
+.message-wrapper.start {
+  padding-top: 20px;
+}
+.avatar {
+  width: 28px;
+  height: 28px;
+}
+.message-wrapper.start .avatar {
+  margin-top: 0;
+}
+.message-wrapper {
+  padding: 4px 0;
+}
+.message-left {
+  flex: 0 0 36px;
+  padding-left: 18px;
+}

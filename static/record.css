@@ -1,14 +1,9 @@
-html,body,.message-window {
-  height: 100%;
-  width: 100%
-}
 body {
   margin: 0;
 }
 .message-list {
   margin-left: auto;
-  overflow: hidden;
-  min-width: 360px;
+  min-width: 326px;
   font-size: 14px;
   word-break: break-all;
 }
