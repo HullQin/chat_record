@@ -11,8 +11,17 @@
 <div class="message-list">
 </div>
 <link rel="stylesheet" href="/static/record.css">
+<script>
+  const isMobile = 'ontouchstart' in window;
+  if (isMobile) {
+    const link = document.createElement('link');
+    link.setAttribute('rel', 'stylesheet');
+    link.setAttribute('href', '/static/record-mobile.css');
+    document.body.appendChild(link);
+  }
+</script>
 <link rel="stylesheet" href="/static/lark.css">
 <style id="person-style"></style>
-<script src="/static/record.js"></script>
+<script defer src="/static/record.js"></script>
 </body>
 </html>

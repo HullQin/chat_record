@@ -5,9 +5,12 @@
   text-decoration: none;
 }
 .time {
-  visibility: initial;
-  display: none;
   padding: 8px 0 0;
+  margin-bottom: -25px;
+  transition: margin .4s;
+}
+.message-wrapper.start:hover .time {
+  visibility: unset;
 }
 .message-wrapper.start {
   padding-top: 20px;

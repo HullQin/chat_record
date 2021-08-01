@@ -1,4 +1,3 @@
-const isMobile = 'ontouchstart' in window;
 const [, username, room] = window.location.pathname.split('/');
 const EmojiMap = new Map([['[OK]', 'ok'], ['[赞]', 'thumbsup'], ['[谢谢]', 'thanks'], ['[加油]', 'fighting'], ['[比心]', 'fingerheart'], ['[鼓掌]', 'applaud'], ['[碰拳]', 'fistbump'], ['[+1]', 'plus'], ['[完成]', 'done'], ['[微笑]', 'smile'], ['[呲牙]', 'grin'], ['[大笑]', 'laugh'], ['[奸笑]', 'smirk'], ['[笑哭]', 'lol'], ['[捂脸]', 'facepalm'], ['[送心]', 'love'], ['[可爱]', 'wink'], ['[得意]', 'proud'], ['[灵光一闪]', 'witty'], ['[机智]', 'smart'], ['[惊呆]', 'scowl'], ['[思考]', 'thinking'], ['[流泪]', 'sob'], ['[泣不成声]', 'cry'], ['[黑线]', 'errr'], ['[抠鼻]', 'nosepick'], ['[酷拽]', 'haughty'], ['[打脸]', 'slap'], ['[吐血]', 'spitblood'], ['[衰]', 'toasted'], ['[黑脸]', 'blackface'], ['[看]', 'glance'], ['[呆无辜]', 'dull'], ['[玫瑰]', 'rose'], ['[爱心]', 'heart'], ['[撒花]', 'party'], ['[无辜笑]', 'innocentsmile'], ['[害羞]', 'shy'], ['[偷笑]', 'chuckle'], ['[笑]', 'joyful'], ['[惊喜]', 'wow'], ['[憨笑]', 'trick'], ['[耶]', 'yeah'], ['[我想静静]', 'enough'], ['[泪奔]', 'tears'], ['[尬笑]', 'embarrassed'], ['[吻]', 'kiss'], ['[飞吻]', 'smooch'], ['[爱慕]', 'drool'], ['[舔屏]', 'obsessed'], ['[钱]', 'money'], ['[做鬼脸]', 'tease'], ['[酷]', 'showoff'], ['[摸头]', 'comfort'], ['[小鼓掌]', 'clap'], ['[强]', 'praise'], ['[奋斗]', 'strive'], ['[脸红]', 'blush'], ['[闭嘴]', 'silent'], ['[再见]', 'wave'], ['[吃瓜群众]', 'eating'], ['[what]', 'what'], ['[皱眉]', 'frown'], ['[凝视]', 'dullstare'], ['[晕]', 'dizzy'], ['[鄙视]', 'lookdown'], ['[大哭]', 'wail'], ['[抓狂]', 'crazy'], ['[可怜]', 'whimper'], ['[求抱抱]', 'hug'], ['[快哭了]', 'blubber'], ['[委屈]', 'wronged'], ['[翻白眼]', 'husky'], ['[嘘]', 'shhh'], ['[撇嘴]', 'smug'], ['[发怒]', 'angry'], ['[敲打]', 'hammer'], ['[震惊]', 'shocked'], ['[恐惧]', 'terror'], ['[石化]', 'petrified'], ['[骷髅]', 'skull'], ['[汗]', 'sweat'], ['[擦汗]', 'speechless'], ['[鼾睡]', 'sleep'], ['[困]', 'drowsy'], ['[哈欠]', 'yawn'], ['[雾霾]', 'sick'], ['[吐]', 'puke'], ['[如花]', 'bigkiss'], ['[绿帽子]', 'betrayed'], ['[听歌]', 'headset'], ['[紫薇别走]', 'donnotgo'], ['[抱拳]', 'salute'], ['[握手]', 'shake'], ['[击掌]', 'highfive'], ['[左上]', 'upperleft'], ['[白眼]', 'slight'], ['[吐舌]', 'tongue'], ['[不看]', 'eyesclosed'], ['[熊吉]', 'bear'], ['[啤酒]', 'lips'], ['[蛋糕]', 'beer'], ['[礼物]', 'cake'], ['[胡瓜]', 'gift'], ['[2021]', 'cucumber'], ['[吐彩虹]', 'rainbowpuke'], ['[伤心]', 'heartbroken'], ['[炸弹]', 'bomb'], ['[屎]', 'poop'], ['[18禁]', '18x'], ['[刀]', 'cleaver']]);
 const messageList = document.getElementsByClassName('message-list')[0];
@@ -105,22 +104,23 @@ const intersectionObserver = new IntersectionObserver((entries) => {
   renderRecord();
 });
 if (isMobile) {
-  const link = document.createElement('link');
-  link.setAttribute('rel', 'stylesheet');
-  link.setAttribute('href', '/static/record-mobile.css');
-  document.body.appendChild(link);
   let lastTimeElementStyle = null;
   messageList.addEventListener('click', e => {
     const path = e.composedPath ? e.composedPath() : e.path;
     for (const element of path) {
       if (element.classList.contains('message-wrapper')) {
         const currentElementStyle = element.getElementsByClassName('time')[0].style;
-        if (lastTimeElementStyle && !Object.is(currentElementStyle, lastTimeElementStyle)) lastTimeElementStyle.display = '';
-        if (currentElementStyle.display === '') {
-          currentElementStyle.display = 'block';
+        if (lastTimeElementStyle && !Object.is(currentElementStyle, lastTimeElementStyle)) {
+          lastTimeElementStyle.visibility = '';
+          lastTimeElementStyle.marginBottom = '-25px';
+        }
+        if (currentElementStyle.visibility === '') {
+          currentElementStyle.visibility = 'initial';
+          currentElementStyle.marginBottom = '0';
           lastTimeElementStyle = currentElementStyle;
         } else {
-          currentElementStyle.display = '';
+          currentElementStyle.visibility = '';
+          currentElementStyle.marginBottom = '-25px';
           lastTimeElementStyle = null;
         }
         break;
