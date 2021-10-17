@@ -25,9 +25,8 @@ def get_sts_credential(allow_prefix):
         sts = Sts(config)
         response = sts.get_credential()
         return response
-    except Exception as e:
-        print(e)
-    return None
+    except Exception:
+        return None
 
 
 def get_current_user(request):
@@ -79,6 +78,7 @@ def enter_room(request, username, room):
 @require_GET
 def record(request):
     current = request.GET.get('current')
+    need_update_credential = request.GET.get('credential')
     try:
         room = get_room_or_reject(request)
     except Room.DoesNotExist:
@@ -88,21 +88,23 @@ def record(request):
     if current is None:
         current = records.count()
         persons = [p.to_dict() for p in room.persons.all()]
-        credential = get_sts_credential(allow_prefix=f'{request.GET.get("username")}/{room.name}/*')
     else:
         persons = None
-        credential = None
         try:
             current = int(current)
         except (ValueError, TypeError):
             return HttpResponseBadRequest()
+    if need_update_credential:
+        credential = get_sts_credential(allow_prefix=f'{request.GET.get("username")}/{room.name}/*')
+    else:
+        credential = None
     left = current - 70
     if left < 0:
         left = 0
     records = [r.to_dict() for r in records[left:current]]
     if persons is not None:
         return json_response(records, current=left, persons=persons, credential=credential)
-    return json_response(records, current=left)
+    return json_response(records, current=left, credential=credential)
 
 
 @require_GET

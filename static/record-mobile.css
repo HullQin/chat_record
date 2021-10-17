@@ -10,7 +10,7 @@
   transition: margin .4s;
 }
 .message-wrapper.start:hover .time {
-  visibility: unset;
+  visibility: hidden;
 }
 .message-wrapper.start {
   padding-top: 20px;
