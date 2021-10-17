@@ -1,10 +1,33 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_GET
 from django.http import JsonResponse, HttpResponseBadRequest
+from django.conf import settings
 from django.db.models import Q
 from main.models import Room, get_record_model
+from sts.sts import Sts
 import requests
 import datetime
+
+
+def get_sts_credential(allow_prefix):
+    config = {
+        'url': 'https://sts.tencentcloudapi.com/',
+        'domain': 'sts.tencentcloudapi.com',
+        'duration_seconds': settings.COS_DURATION_SECONDS,
+        'secret_id': settings.COS_SECRET_ID,
+        'secret_key': settings.COS_SECRET_KEY,
+        'bucket': settings.COS_SECRET_BUCKET,
+        'region': settings.COS_SECRET_REGION,
+        'allow_prefix': allow_prefix,
+        'allow_actions': ['name/cos:GetObject'],
+    }
+    try:
+        sts = Sts(config)
+        response = sts.get_credential()
+        return response
+    except Exception as e:
+        print(e)
+    return None
 
 
 def get_current_user(request):
@@ -65,8 +88,10 @@ def record(request):
     if current is None:
         current = records.count()
         persons = [p.to_dict() for p in room.persons.all()]
+        credential = get_sts_credential(allow_prefix=f'{request.GET.get("username")}/{room.name}/*')
     else:
         persons = None
+        credential = None
         try:
             current = int(current)
         except (ValueError, TypeError):
@@ -76,7 +101,7 @@ def record(request):
         left = 0
     records = [r.to_dict() for r in records[left:current]]
     if persons is not None:
-        return json_response(records, current=left, persons=persons)
+        return json_response(records, current=left, persons=persons, credential=credential)
     return json_response(records, current=left)
 
 

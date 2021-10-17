@@ -65,3 +65,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
+COS_DURATION_SECONDS = 0  # overrode by prod_settings.py
+COS_SECRET_ID = ''  # overrode by prod_settings.py
+COS_SECRET_KEY = ''  # overrode by prod_settings.py
+COS_SECRET_BUCKET = ''  # overrode by prod_settings.py
+COS_SECRET_REGION = ''  # overrode by prod_settings.py

@@ -31,6 +31,14 @@ body {
   background-color: #eff0f1;
   color: #1f2329;
 }
+.content.image {
+  padding: 0;
+  line-height: 0;
+}
+.content.image > img {
+  border-radius: inherit;
+  max-width: 426px;
+}
 .message-wrapper.start .content {
   border-top-left-radius: 8px;
 }
