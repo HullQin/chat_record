@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3
 MAINTAINER hullqin
 COPY . /root/chat_record
 WORKDIR /root/chat_record

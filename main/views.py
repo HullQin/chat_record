@@ -3,10 +3,12 @@ from django.views.decorators.http import require_GET
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.conf import settings
 from django.db.models import Q
+from main.memcache import memcache_client
 from main.models import Room, get_record_model
 from sts.sts import Sts
 import requests
 import datetime
+import json
 
 
 def get_sts_credential(allow_prefix):
@@ -30,14 +32,23 @@ def get_sts_credential(allow_prefix):
 
 
 def get_current_user(request):
-    session_key = request.COOKIES.get('authsessionid', '')
+    session_key = request.COOKIES.get('sid', '')
     if len(session_key) != 32:
         return None
-    url = 'https://auth.hullqin.cn/innerapi/user/'
-    response = requests.get(url, headers=dict(cookie=f'authsessionid={session_key}'))
-    if not response.text:
-        return None
-    return response.json()
+    if settings.DEBUG:
+        url = 'https://auth.hullqin.cn/innerapi/user/'
+        response = requests.get(url, headers=dict(cookie=f'sid={session_key}'))
+        if not response.text:
+            return None
+        return response.json()
+    else:
+        result = memcache_client.get(f':1:django.contrib.sessions.cache{session_key}')
+        if result is None:
+            return None
+        try:
+            return json.loads(result['_auth_user'])
+        except (json.JSONDecodeError, TypeError, KeyError):
+            return None
 
 
 def get_room_or_reject(request, username=None, room_name=None):
