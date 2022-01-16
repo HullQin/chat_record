@@ -3,12 +3,11 @@ from django.views.decorators.http import require_GET
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.conf import settings
 from django.db.models import Q
-from main.memcache import memcache_client
+from main.memcache import memcache_get
 from main.models import Room, get_record_model
 from sts.sts import Sts
 import requests
 import datetime
-import json
 
 
 def get_sts_credential(allow_prefix):
@@ -42,12 +41,12 @@ def get_current_user(request):
             return None
         return response.json()
     else:
-        result = memcache_client.get(f':1:django.contrib.sessions.cache{session_key}')
+        result = memcache_get(f':1:django.contrib.sessions.cache{session_key}')
         if result is None:
             return None
         try:
-            return json.loads(result['_auth_user'])
-        except (json.JSONDecodeError, TypeError, KeyError):
+            return result['_auth_user_info']
+        except (TypeError, KeyError):
             return None
 
 
