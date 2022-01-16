@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.views.decorators.http import require_GET
-from django.http import JsonResponse, HttpResponseBadRequest
+from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseNotFound
 from django.conf import settings
 from django.db.models import Q
 from main.memcache import memcache_get
@@ -81,7 +81,7 @@ def enter_room(request, username, room):
     try:
         get_room_or_reject(request, username, room)
     except Room.DoesNotExist:
-        return redirect('/')
+        return HttpResponseNotFound()
     return render(request, 'record.html')
 
 

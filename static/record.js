@@ -145,7 +145,7 @@ const renderRecord = (() => {
     messageList.insertBefore(fragment, lastFirstChild);
     if (init) {
       scrollTo(0, 999999);
-      await new Promise((resolve) => setTimeout(resolve, 10));
+      await new Promise((resolve) => setTimeout(resolve, 500));
       scrollTo(0, 999999);
     } else {
       while (Math.abs(window.scrollY - lastFirstChild.offsetTop) > 30) {
